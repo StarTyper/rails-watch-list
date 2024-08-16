@@ -1,0 +1,7 @@
+<div>
+  <%= simple_form_for [@list, @bookmark] do |f| %>
+    <%= f.input :comment, placeholder: "Write a comment" %>
+    <%= f.association :movie, collection: Movie.all, prompt: "Select a movie" %>
+    <%= f.button :submit %>
+  <% end %>
+</div>

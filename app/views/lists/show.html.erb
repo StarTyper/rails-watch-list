@@ -1,0 +1,96 @@
+<!-- Modal ADD MOVIE -->
+<div class="modal fade" id="addMovieModal" tabindex="-1" aria-labelledby="addMovieModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addMovieModalLabel">add movie</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <%= simple_form_for [@list, @bookmark] do |f| %>
+            <%= f.input :comment, placeholder: "Write a comment" %>
+            <%= f.association :movie, collection: Movie.all, prompt: "Select a movie" %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <%= f.button :submit, "Add movie", class: "btn btn-primary" %>
+          <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal EDIT LIST-->
+<div class="modal fade" id="editListModal" tabindex="-1" aria-labelledby="editListModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="editListModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="form">
+          <%= simple_form_for(@list) do |f| %>
+            <%= f.error_notification %>
+            <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+            <div class="form-inputs">
+              <%= f.input :name %>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <%= f.button :submit, "Update List", class: "btn btn-success" %>
+          <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DIV SHOW LIST-->
+<div class="d-flex justify-content-center m-3">
+  <div class="card p-3">
+    <div class="p-3">
+      <h3><%= @list.name %></h3>
+    </div>
+    <div class="d-flex mt-3">
+      <div class="p-3">
+        <p><%=  %></p>
+      </div>
+    </div>
+    <div class="p-3" id="links">
+      <%= link_to "All Lists", lists_path, class: "btn btn-secondary" %>
+      <!-- Button trigger modal ADD MOVIE -->
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMovieModal">
+        add movie
+      </button>
+      <!-- Button trigger modal EDIT LIST-->
+      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editListModal">
+        Edit
+      </button>
+      <%= link_to "Delete", list_path(@list), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} , class: "btn btn-danger" %>
+    </div>
+  </div>
+</div>
+
+<!-- CONTAINER MOVIES-->
+<div id="movie_cards_container" class="d-flex justify-content-center">
+  <div id="movie_cards" class="d-flex flex-row mb-3">
+    <% @list.movies.each do |movie| %>
+      <div class="card m-2" style="width: 18rem;">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title"><%= movie.title %></h5>
+          <p class="card-text"><%= movie.rating %></p>
+          <a href="<%= movie.poster_url %>" class="btn btn-primary">Go somewhere</a>
+          <% bookmark = Bookmark.find_by(list: @list, movie: movie) %>
+          <%= bookmark.comment %>
+          <%# <% link_to "Delete" bookmark_path(bookmark) %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

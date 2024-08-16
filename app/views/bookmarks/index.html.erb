@@ -1,0 +1,20 @@
+
+<div id="bookmarks" class="d-flex justify-content-center">
+  <div id="container_main" class="d-flex justify-content-center">
+    <div id="my_bookmarks" class="me-auto">
+      <div id="bookmark_cards_heading">
+        <h2>My Bookmarks</h2>
+      </div>
+      <div id="bookmark_cards"  class="d-flex align-content-start flex-wrap">
+        <% @bookmarks.each do |bookmark| %>
+          <div class="card-category m-3" style="color: white; width: 18rem; height: 12rem; background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/breakfast.jpg)">
+            <%= link_to "#{bookmark.name}", bookmark_path(bookmark), class: "btn btn-success" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div id="button_create">
+      <%= link_to "Create a movie bookmark", new_bookmark_path, class: "btn btn-success" %>
+    </div>
+  </div>
+</div>

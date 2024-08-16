@@ -1,0 +1,54 @@
+<div id="home">
+  <!-- Modal -->
+  <div class="modal fade" id="addMovie" tabindex="-1" aria-labelledby="addMovieLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="addMovieLabel">New list</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="form">
+            <div>
+              <%= simple_form_for(@list) do |f| %>
+                <%= f.error_notification %>
+                <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+                <%= f.input :name %>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <%= f.button :submit, "Create List", class: "btn btn-success" %>
+              <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="title" class="d-flex justify-content-center">
+    <div>
+      <h1>Save any kind of movies</h1>
+      <h3>Classic</h3>
+    </div>
+  </div>
+  <div id="lists" class="d-flex justify-content-center">
+    <div id="container_main" class="d-flex justify-content-center">
+      <div id="my_lists" class="me-auto">
+        <div id="list_cards_heading">
+          <h2>My Lists</h2>
+        </div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMovie">
+          add movie
+        </button>
+        <div id="list_cards"  class="d-flex align-content-start flex-wrap">
+          <% @lists.each do |list| %>
+            <div class="card-category m-3" style="color: white; width: 18rem; height: 12rem; background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/breakfast.jpg)">
+              <%= link_to "#{list.name}", list_path(list), class: "btn btn-success" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
