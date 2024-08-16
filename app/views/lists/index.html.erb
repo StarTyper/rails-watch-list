@@ -1,54 +1,69 @@
 <div id="home">
-  <!-- Modal -->
-  <div class="modal fade" id="addMovie" tabindex="-1" aria-labelledby="addMovieLabel" aria-hidden="true">
+  <!-- Modal CREATE LIST-->
+  <div class="modal fade" id="createList" tabindex="-1" aria-labelledby="createListLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="addMovieLabel">New list</h1>
+          <h1 class="modal-title fs-5" id="createListLabel">New list</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div id="form">
-            <div>
-              <%= simple_form_for(@list) do |f| %>
-                <%= f.error_notification %>
-                <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-                <%= f.input :name %>
-            </div>
+            <%= simple_form_for(@list) do |f| %>
+              <%= f.error_notification %>
+              <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+              <%= f.input :name %>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <%= f.button :submit, "Create List", class: "btn btn-success" %>
-              <% end %>
+              <%= f.button :submit, "Create List", class: "btn btn-success" %>
+            <% end %>
         </div>
       </div>
     </div>
   </div>
-  <div id="title" class="d-flex justify-content-center">
-    <div>
+
+  <!-- HEADER-->
+  <div id="title" class="d-flex justify-content-center" style="background-image: url(https://images.unsplash.com/photo-1563381013529-1c922c80ac8d?q=80&w=2913&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)">
+    <div class="text-white">
       <h1>Save any kind of movies</h1>
       <h3>Classic</h3>
     </div>
   </div>
-  <div id="lists" class="d-flex justify-content-center">
-    <div id="container_main" class="d-flex justify-content-center">
-      <div id="my_lists" class="me-auto">
-        <div id="list_cards_heading">
+
+  <!-- CONTAINER LIST-->
+  <div id="container" class="row">
+    <div class="col-1"></div>
+    <div id="my_lists" class="col">
+      <div id="first-row" class="row">
+        <div id="list_cards_heading" class="col">
           <h2>My Lists</h2>
         </div>
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMovie">
-          add movie
-        </button>
-        <div id="list_cards"  class="d-flex align-content-start flex-wrap">
+        <div id="trigger-modal" class="col d-flex align-items-center">
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createList">
+            create List
+          </button>
+        </div>
+      </div>
+
+      <!-- CONTAINER LIST-->
+      <div id="list_cards"  class="row g-2">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
           <% @lists.each do |list| %>
-            <div class="card-category m-3" style="color: white; width: 18rem; height: 12rem; background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/breakfast.jpg)">
-              <%= link_to "#{list.name}", list_path(list), class: "btn btn-success" %>
+          <div class="col">
+            <div class="card h-100">
+              <img src="<%= list.image_url %>" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title"><%= link_to "#{list.name}", list_path(list), class: "btn", style: "color: black" %></h5>
+              </div>
             </div>
+          </div>
           <% end %>
         </div>
       </div>
     </div>
+    <div class="col-1"></div>
   </div>
 </div>
